@@ -5,3 +5,4 @@ About Us updated:
 - States that the game is currently in development.
 - Mentions the team's ongoing work on features, systems, maps, and improvements.
 - Keeps the wording focused on the Roblox gaming experience.
+- Website deployment update
