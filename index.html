@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b10">
+<title>Glory of Conflicts — Community Rules</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="liquid-noise" aria-hidden="true"></div>
+<div class="progress" id="progress"></div>
+<nav class="nav">
+  <a class="brand" href="#"><img class="brand-logo" src="logo.png" alt="Glory of Conflicts logo"><span>Glory of Conflicts</span></a>
+  <div class="navlinks"><a href="#rules">Rules</a><a href="info.html">Info</a></div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" id="heroBg" style="background-image:url('rules-header.png');"></div>
+  <div class="hero-content">
+    <div class="kicker"><span class="dot"></span> Community guidelines</div>
+    <h1>Play fair.<br>Respect everyone.</h1>
+    <p>Everything you need to know about keeping Glory of Conflicts competitive, welcoming, and enjoyable for everyone.</p>
+    <div class="actions">
+      <a class="btn primary" href="#rules">View rules ↓</a>
+      <button class="btn" id="collapseAll">Collapse all</button>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="rules">
+  <div class="section-head reveal">
+    <div><div class="eyebrow">01 / Community standards</div><h2>The rules</h2></div>
+    <p>Click any rule to reveal its full explanation. These guidelines apply to the community and the game.</p>
+  </div>
+  <div class="rules" id="rulesList"></div>
+  <div class="meta reveal"><span class="pill">Respect first</span><span class="pill">No cheating</span><span class="pill">Keep it appropriate</span><span class="pill">Use common sense</span></div>
+  <section class="about-card reveal" id="about">
+    <div>
+      <div class="eyebrow">02 / About Us</div>
+      <h2>Built for the community.</h2>
+      <p>Glory of Conflicts is a Roblox game currently in development that aims to simulate the war in Ukraine as a Roblox gaming experience. We are working to create an immersive and engaging experience inspired by the conflict, while keeping the focus on gameplay, teamwork, and the community.
+
+Our team is still actively developing the game and putting our best effort into improving the experience. New features, systems, maps, and improvements are being worked on as development continues. Thank you for supporting us while Glory of Conflicts is in development.</p>
+      <p></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+ <div class="container footer-inner">
+  <div><strong>Glory of Conflicts</strong><br>Community Rules</div>
+  <div>Thank you for being part of the community.</div>
+ </div>
+</footer>
+<div class="toast" id="toast">Rule expanded</div>
+
+<script>
+const rules=[
+["Respect Everyone","Treat all members with respect. Harassment, discrimination, bullying, or personal attacks are not tolerated.","Debates and disagreements are fine when they remain respectful. Do not target people personally or attempt to provoke them."],
+["No Spam","Do not spam messages, mentions, emojis, images, or other content.","Avoid repeated messages, excessive pings, reaction spam, or anything designed to disrupt a channel."],
+["No NSFW Content","Sexual, excessively graphic, or otherwise inappropriate content is not allowed.","Keep content suitable for the community and its members. Staff may remove content that crosses this standard."],
+["No Advertising","Do not advertise other Discord servers, Roblox games, social media, or services without permission from staff.","Unapproved promotional links, invite links, or repeated self-promotion may be removed."],
+["Keep Discussions Appropriate","Keep conversations suitable for the community and avoid unnecessary arguments or disruptive behavior.","Use the correct channel for the topic and step away from arguments instead of escalating them."],
+["No Exploiting or Cheating","Exploits, cheats, unauthorized scripts, or attempts to gain an unfair advantage in Glory of Conflicts are prohibited.","Report vulnerabilities to staff instead of abusing them. Using an exploit does not become acceptable because other players use it."],
+["Follow Discord & Roblox Rules","All members are expected to follow the Discord Terms of Service and Roblox Community Standards.","Platform rules still apply even when something is not specifically listed on this page."],
+["Listen to Staff","Staff members help maintain the server. Please follow reasonable instructions from staff.","If you disagree with a moderation decision, use the appropriate support channel rather than disrupting public channels."],
+["No Impersonation","Do not impersonate staff members, developers, content creators, or other members.","Do not use names, profiles, or messages intended to make others believe you are another person."],
+["Use the Correct Channels","Keep conversations in their appropriate channels and use channels for their intended purpose.","Off-topic or misplaced content may be moved or removed so channels remain useful."],
+["No Malicious Content","Do not share malware, malicious links, scams, phishing attempts, or other harmful content.","Suspicious files, credential-stealing links, and deceptive messages are not permitted."],
+["Common Sense","Not everything can be covered by a list of rules. Use common sense and help keep the community welcoming.","If something clearly creates harm, disruption, or an unsafe environment, staff may take action even if there is no exact matching sentence above."]
+];
+const list=document.getElementById("rulesList");
+rules.forEach((r,i)=>{
+ const el=document.createElement("article"); el.className="rule reveal";
+ el.innerHTML=`<div class="rule-top" tabindex="0" role="button" aria-expanded="false">
+ <div class="num">${String(i+1).padStart(2,"0")}</div>
+ <div><div class="rule-title">${r[0]}</div><div class="rule-main">${r[1]}</div></div>
+ <button class="toggle" aria-label="Toggle rule"><span>+</span></button>
+ </div>
+ <div class="extra"><div class="extra-inner"><div class="extra-content">${r[2]}</div></div></div>`;
+ list.appendChild(el);
+});
+const toast=document.getElementById("toast");
+function notify(msg){
+ toast.textContent=msg; toast.classList.add("show");
+ clearTimeout(window.tt); window.tt=setTimeout(()=>toast.classList.remove("show"),1400);
+}
+function setOpen(rule,open){
+ rule.classList.toggle("open",open);
+ rule.querySelector(".rule-top").setAttribute("aria-expanded",String(open));
+}
+document.querySelectorAll(".rule").forEach(rule=>{
+ const top=rule.querySelector(".rule-top");
+ const toggle=rule.querySelector(".toggle");
+ function go(){const open=!rule.classList.contains("open");document.querySelectorAll(".rule.open").forEach(x=>{if(x!==rule)setOpen(x,false)});setOpen(rule,open);notify(open?"Rule expanded":"Rule collapsed")}
+ top.addEventListener("click",e=>{if(e.target.closest(".toggle"))return;go()});
+ toggle.addEventListener("click",e=>{e.stopPropagation();go()});
+ top.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
+});
+document.getElementById("collapseAll").onclick=()=>{document.querySelectorAll(".rule").forEach(r=>setOpen(r,false));notify("All rules collapsed")};
+
+const progress=document.getElementById("progress");
+window.addEventListener("scroll",()=>{
+ const max=document.documentElement.scrollHeight-innerHeight;
+ progress.style.width=(max>0?(scrollY/max)*100:0)+"%";
+});
+const heroBg=document.getElementById("heroBg");
+window.addEventListener("pointermove",e=>{
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const x=(e.clientX/innerWidth-.5)*8, y=(e.clientY/innerHeight-.5)*5;
+ document.documentElement.style.setProperty("--mx",`${e.clientX}px`);
+ document.documentElement.style.setProperty("--my",`${e.clientY}px`);
+ heroBg.style.transform=`scale(1.055) translate(${x}px,${y}px)`;
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.08});
+document.querySelectorAll(".reveal").forEach(e=>io.observe(e));
+</script>
+
+<script>
+(()=>{
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const items=document.querySelectorAll('.card,.rule,.about-card');
+ items.forEach(el=>{
+   el.addEventListener('pointermove',e=>{
+     if(innerWidth<760)return;
+     const r=el.getBoundingClientRect();
+     const x=(e.clientX-r.left)/r.width-.5;
+     const y=(e.clientY-r.top)/r.height-.5;
+     el.style.setProperty('--mx',`${e.clientX-r.left}px`);
+     el.style.setProperty('--my',`${e.clientY-r.top}px`);
+     if(!el.classList.contains('open')) el.style.transform=`translateY(-4px) perspective(900px) rotateX(${(-y*1.8).toFixed(2)}deg) rotateY(${(x*1.8).toFixed(2)}deg)`;
+   });
+   el.addEventListener('pointerleave',()=>{el.style.transform='';});
+ });
+})();
+</script>
+</body>
+</html>

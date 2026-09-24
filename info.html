@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07090d">
+<title>Glory of Conflicts — Game Information</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="liquid-noise" aria-hidden="true"></div>
+<div class="progress" id="progress"></div>
+<nav class="nav">
+  <a class="brand" href="index.html"><img class="brand-logo" src="logo.png" alt="Glory of Conflicts logo"><span>Glory of Conflicts</span></a>
+  <div class="navlinks"><a href="index.html">Rules</a><a class="active" href="info.html">Info</a></div>
+</nav>
+<header class="hero" id="top">
+  <div class="hero-bg" id="heroBg" style="background-image:url('info-header.png');"></div>
+  <div class="hero-content">
+    <div class="kicker"><span class="dot"></span> Game information</div>
+    <h1>Know the game.</h1>
+    <p>Learn more about Glory of Conflicts, its development, gameplay direction, and what to expect from the project.</p>
+    <div class="actions"><a class="btn primary" href="#information">Explore information ↓</a><a class="btn" href="index.html">Back to rules</a></div>
+  </div>
+</header>
+<main class="container" id="information">
+  <div class="section-head reveal"><div><div class="eyebrow">01 / Game overview</div><h2>About Glory of Conflicts</h2></div><p>A central overview of the project and what we are building for the Roblox platform.</p></div>
+  <div class="grid">
+    <article class="card wide reveal"><div class="status"><span class="dot"></span> Currently in development</div><h3>A modern Roblox combat experience</h3><p>Glory of Conflicts is a Roblox game currently in development, focused on a modern military combat experience inspired by the war in Ukraine. Our goal is to build an immersive multiplayer environment centered around teamwork, communication, tactical gameplay, and large-scale combat scenarios.</p><div class="pill-row"><span class="pill">Roblox</span><span class="pill">Multiplayer</span><span class="pill">Teamwork</span><span class="pill">Tactical Gameplay</span></div></article>
+    <article class="card reveal"><h3>Gameplay</h3><p>Players will be able to participate in different combat scenarios, cooperate with their team, and experience a range of maps, equipment, vehicles, and gameplay systems.</p></article>
+    <article class="card reveal"><h3>Development</h3><p>The project is actively being developed. New systems, maps, vehicles, equipment, improvements, and other features are being worked on as development continues.</p></article>
+    <article class="card reveal"><h3>Community</h3><p>Our community is an important part of development. Feedback, reports, and suggestions help us identify issues and improve the experience over time.</p></article>
+    <article class="card reveal"><h3>Development Notice</h3><p>Because the game is still in development, players may encounter bugs, unfinished features, balancing changes, or other temporary issues. Content and mechanics may also change as development progresses.</p></article>
+  </div>
+  <div class="section-head reveal"><div><div class="eyebrow">02 / Our direction</div><h2>Built over time.</h2></div><p>We are continuing to expand the project while keeping the focus on a polished multiplayer experience.</p></div>
+  <article class="card wide reveal"><h3>Our goal</h3><p>We are putting our best effort into developing Glory of Conflicts and creating an engaging experience for the community. As development continues, we plan to improve existing systems, introduce new content, and refine the overall gameplay experience.</p></article>
+</main>
+<footer class="footer"><div class="container footer-inner"><div><strong>Glory of Conflicts</strong><br>Game Information</div><div>Currently in development.</div></div></footer>
+<script>
+const progress=document.getElementById('progress');
+const bg=document.getElementById('heroBg');
+function update(){const h=document.documentElement.scrollHeight-innerHeight;progress.style.width=(h>0?(scrollY/h)*100:0)+'%'}
+addEventListener('scroll',update,{passive:true});update();
+addEventListener('mousemove',e=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const x=(e.clientX/innerWidth-.5)*5,y=(e.clientY/innerHeight-.5)*3;bg.style.transform=`scale(1.035) translate(${x}px,${y}px)`});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
+</script>
+
+<script>
+(()=>{
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const items=document.querySelectorAll('.card,.rule,.about-card');
+ items.forEach(el=>{
+   el.addEventListener('pointermove',e=>{
+     if(innerWidth<760)return;
+     const r=el.getBoundingClientRect();
+     const x=(e.clientX-r.left)/r.width-.5;
+     const y=(e.clientY-r.top)/r.height-.5;
+     el.style.setProperty('--mx',`${e.clientX-r.left}px`);
+     el.style.setProperty('--my',`${e.clientY-r.top}px`);
+     if(!el.classList.contains('open')) el.style.transform=`translateY(-4px) perspective(900px) rotateX(${(-y*1.8).toFixed(2)}deg) rotateY(${(x*1.8).toFixed(2)}deg)`;
+   });
+   el.addEventListener('pointerleave',()=>{el.style.transform='';});
+ });
+})();
+</script>
+</body>
+</html>
